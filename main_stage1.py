@@ -19,10 +19,11 @@ def main(args):
     train_loader, val_loader = custom_data_loader.customDataloader(args)
 
     for epoch in range(args.start_epoch, args.epochs+1):
-        scheduler.step()
-        recorder.insertRecord('train', 'lr', epoch, scheduler.get_lr()[0])
+        
+        recorder.insertRecord('train', 'lr', epoch, optimizer.param_groups[0]['lr'])
 
         train_utils.train(args, train_loader, model, criterion, optimizer, log, epoch, recorder)
+        scheduler.step()
         if epoch % args.save_intv == 0: 
             model_utils.saveCheckpoint(args.cp_dir, epoch, model, optimizer, recorder.records, args)
         log.plotCurves(recorder, 'train')

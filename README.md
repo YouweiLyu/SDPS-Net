@@ -100,7 +100,11 @@ If the above command is not working, please manually download the training datas
 ### First stage: train Lighting Calibration Network (LCNet)
 ```shell
 # Train LCNet on synthetic datasets using 32 input images
-CUDA_VISIBLE_DEVICES=0 python main_stage1.py --in_img_num 32
+* Adapted for PyTorch 1.7.1
+CUDA_VISIBLE_DEVICES=0 python main_stage1.py --in_img_num 32 --item check_in_img_num --suffix 32input --epochs 30 --batch 64 --val_batch 16 --init_lr 1e-3
+CUDA_VISIBLE_DEVICES=1 python main_stage1.py --in_img_num 16 --item check_in_img_num --suffix 16input --epochs 30 --batch 64 --val_batch 16 --init_lr 1e-3
+CUDA_VISIBLE_DEVICES=1 python main_stage1.py --in_img_num 4 --item check_in_img_num --suffix 4input --epochs 30 --batch 64 --val_batch 16 --init_lr 1e-3
+
 # Please refer to options/base_opt.py and options/stage1_opt.py for more options
 
 # You can find checkpoints and results in data/logdir/
